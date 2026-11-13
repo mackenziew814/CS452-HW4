@@ -1,5 +1,4 @@
-// MT-safe queue: wraps a Deq with one mutex and two condition variables.
-// The deq module itself is unchanged.
+// MT-safe queue, wraps a Deq with one mutex and two condition variables
 
 #include <stdlib.h>
 #include <string.h>
@@ -10,13 +9,13 @@
 
 typedef struct {
   Deq q;                        // the wrapped, MT-unsafe queue
-  int max;                      // capacity; 0 means unbounded
+  int max;                      // capacity, 0 means unbounded
   pthread_mutex_t lock;         // protects q
   pthread_cond_t notEmpty;      // signaled after a put
   pthread_cond_t notFull;       // signaled after a get
 } *Rep;
 
-// pthread functions return an error number, rather than setting errno.
+// pthread functions return an error number
 #define CHECK(call) do {                                \
   int err=(call);                                       \
   if (err) ERROR("%s failed: %s",#call,strerror(err));  \
@@ -58,8 +57,7 @@ extern int mtq_len(Mtq q) {
 
 // Shared put/get logic. f is the deq function for the chosen end.
 // The waits are in while loops, because a woken thread must recheck
-// its condition: another thread may have changed the queue first,
-// and condition variables allow spurious wakeups.
+// its condition
 
 static void put(Rep r, void (*f)(Deq,Data), Data d) {
   CHECK(pthread_mutex_lock(&r->lock));

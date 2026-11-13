@@ -1,9 +1,7 @@
 // Whack-a-Mole: n producer threads each create a mole and put it in an
 // MT-safe queue; n consumer threads each take a mole out and whack it.
 // produce and consume communicate only through the queue.
-//
-// The queue's capacity (max) limits how many unwhacked moles can wait,
-// so producers stall ("congestion") when consumers fall behind.
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,12 +32,12 @@ static void *consume(void *a) {
 
 int main() {
   srandom(time(0));
-  const int n=10;               // moles; must match producers and consumers
-  const int max=4;              // queue capacity; 0 means unbounded
+  const int n=10;               // must match producers and consumers
+  const int max=4;              // queue capacity (0 means unbounded)
 
   Lawn lawn=lawn_new(0,0);
   Mtq q=mtq_new(max);
-  void *arg[]={q,lawn};         // on main's stack: safe, we join below
+  void *arg[]={q,lawn};         
 
   Threads producers=threads_create(n,produce,arg);
   Threads consumers=threads_create(n,consume,arg);
