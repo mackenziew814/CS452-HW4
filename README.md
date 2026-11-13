@@ -170,7 +170,7 @@ Below is my valgrind report I generated using the vg script and fltk suppression
 ==610226==    by 0x4A63AA6: fl_open_display() (in /usr/lib64/libfltk.so.1.3.8) \
 ==610226== \
 ==610226== 128 bytes in 1 blocks are still reachable in loss record 158 of 231 \
-==610226==    at 0x484F984: reallocarray (vg_replace_malloc.c:1806) \ 
+==610226==    at 0x484F984: reallocarray (vg_replace_malloc.c:1806) \
 ==610226==    by 0x48BB7B4: ??? (in /usr/lib64/libX11.so.6.4.0) \
 ==610226==    by 0x48C6D88: ??? (in /usr/lib64/libX11.so.6.4.0) \
 ==610226==    by 0x48C8752: ??? (in /usr/lib64/libX11.so.6.4.0) \
